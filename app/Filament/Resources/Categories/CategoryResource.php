@@ -28,6 +28,12 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationLabel = 'Kategori';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Artikel & Halaman';
+
+    protected static ?string $navigationParentItem = 'Artikel';
+
+    protected static ?int $navigationSort = 2;
+
     protected static ?string $modelLabel = 'Kategori';
 
     protected static ?string $pluralModelLabel = 'Kategori';

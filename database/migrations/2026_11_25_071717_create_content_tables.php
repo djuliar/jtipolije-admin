@@ -61,10 +61,29 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('pages', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('template');
+            $table->string('name');
+            $table->string('title');
+            $table->string('slug');
+            $table->text('content')->nullable();
+            $table->text('image')->nullable();
+            $table->longText('extras')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->integer('user_id_last_edit')->nullable();
+            $table->integer('active')->nullable()->default(1);
+            $table->text('meta_keyword')->nullable();
+            $table->text('meta_description')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     public function down(): void
     {
+        Schema::dropIfExists('pages');
         Schema::dropIfExists('article_tag');
         Schema::dropIfExists('articles');
         Schema::dropIfExists('tags');

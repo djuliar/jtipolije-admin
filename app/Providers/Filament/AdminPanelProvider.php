@@ -8,6 +8,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -18,6 +19,7 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
@@ -32,6 +34,7 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->renderHook('panels::head.end', fn (): string => '<link rel="stylesheet" href="'.Vite::asset('resources/css/app.css').'">')
             ->sidebarCollapsibleOnDesktop()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
@@ -44,7 +47,20 @@ class AdminPanelProvider extends PanelProvider
                 FilamentInfoWidget::class,
             ])
             ->plugins([
-                FilamentShieldPlugin::make(),
+                FilamentShieldPlugin::make()
+                    ->navigationGroup('Authentication')
+                    ->navigationSort(2)
+                    ->gridColumns([
+                        'default' => 1,
+                        'sm' => 1,
+                        'lg' => 2,
+                    ])
+                    ->sectionColumnSpan(1)
+                    ->checkboxListColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                        'lg' => 4,
+                    ]),
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -59,6 +75,26 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label('Artikel & Halaman')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Data Master')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Civitas')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Laboratorium')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Authentication')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Configuration')
+                    ->collapsed(),
             ]);
     }
 }

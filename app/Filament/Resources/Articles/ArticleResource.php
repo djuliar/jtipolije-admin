@@ -22,6 +22,10 @@ class ArticleResource extends Resource
 
     protected static ?string $navigationLabel = 'Artikel';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Artikel & Halaman';
+
+    protected static ?int $navigationSort = 1;
+
     protected static ?string $modelLabel = 'Artikel';
 
     protected static ?string $pluralModelLabel = 'Artikel';

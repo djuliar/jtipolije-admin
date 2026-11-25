@@ -9,3 +9,13 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+.fi-wi-stats-overview-stat .fi-icon {
+    position: absolute;
+    top: 50%;
+    right: 1.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    opacity: 0.4;
+    transform: translateY(-50%) rotate(15deg);
+}

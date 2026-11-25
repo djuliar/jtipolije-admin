@@ -2,7 +2,14 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Administrasi;
 use App\Models\Article;
+use App\Models\Dosen;
+use App\Models\Laboratorium;
+use App\Models\Page;
+use App\Models\Prodi;
+use App\Models\Teknisi;
+use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Support\Facades\DB;
@@ -16,14 +23,14 @@ class ContentStats extends StatsOverviewWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Articles', Article::query()->count()),
-            Stat::make('Pages', DB::table('pages')->whereNull('deleted_at')->count()),
-            Stat::make('Program Studi', DB::table('prodi')->count()),
-            Stat::make('Laboratorium', DB::table('laboratorium')->count()),
-            Stat::make('Slider', DB::table('sliders')->count()),
-            Stat::make('Dosen', DB::table('dosen')->count()),
-            Stat::make('Teknisi', DB::table('teknisi')->count()),
-            Stat::make('Staf', DB::table('administrasi')->count()),
+            Stat::make('Articles', Article::query()->where('active', 1)->count())->icon(Heroicon::OutlinedNewspaper),
+            Stat::make('Pages', Page::query()->where('active', 1)->count())->icon(Heroicon::OutlinedDocumentText),
+            Stat::make('Program Studi', Prodi::query()->where('active', 1)->count())->icon(Heroicon::OutlinedAcademicCap),
+            Stat::make('Laboratorium', Laboratorium::query()->where('active', 1)->count())->icon(Heroicon::OutlinedBeaker),
+            Stat::make('Dosen', Dosen::query()->where('active', 1)->count())->icon(Heroicon::OutlinedAcademicCap),
+            Stat::make('Teknisi', Teknisi::query()->where('active', 1)->count())->icon(Heroicon::OutlinedWrenchScrewdriver),
+            Stat::make('Staf', Administrasi::query()->where('active', 1)->count())->icon(Heroicon::OutlinedClipboardDocumentList),
+            Stat::make('Slider', DB::table('sliders')->where('active', 1)->count())->icon(Heroicon::OutlinedPhoto),
         ];
     }
 }
