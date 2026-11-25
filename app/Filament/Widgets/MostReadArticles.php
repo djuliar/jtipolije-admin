@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class MostReadArticles extends TableWidget
 {
-    protected int|string|array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 1;
 
-    protected int|array|null $columns = 4;
+    protected int|array|null $columns = 2;
 
     public function table(Table $table): Table
     {
@@ -20,10 +20,11 @@ class MostReadArticles extends TableWidget
             ->query(fn (): Builder => Article::query())
             ->columns([
                 TextColumn::make('read_count')->label('Jumlah Dibaca')->numeric()->sortable(),
-                TextColumn::make('title')->label('Judul')->limit(100),
+                TextColumn::make('title')->label('Judul')->limit(50),
             ])
             ->defaultSort('read_count', 'desc')
             ->paginated([5, 10, 25, 50])
+            ->defaultPaginationPageOption(5)
             ->heading('Artikel Paling Banyak Dibaca');
     }
 }
