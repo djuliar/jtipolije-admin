@@ -8,6 +8,7 @@ use App\Models\Dosen;
 use App\Models\Laboratorium;
 use App\Models\Page;
 use App\Models\Prodi;
+use App\Models\Slider;
 use App\Models\Teknisi;
 use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\StatsOverviewWidget;
@@ -30,7 +31,7 @@ class ContentStats extends StatsOverviewWidget
             Stat::make('Dosen', Dosen::query()->where('active', 1)->count())->icon(Heroicon::OutlinedAcademicCap),
             Stat::make('Teknisi', Teknisi::query()->where('active', 1)->count())->icon(Heroicon::OutlinedWrenchScrewdriver),
             Stat::make('Staf', Administrasi::query()->where('active', 1)->count())->icon(Heroicon::OutlinedClipboardDocumentList),
-            Stat::make('Slider', DB::table('sliders')->where('active', 1)->count())->icon(Heroicon::OutlinedPhoto),
+            Stat::make('Slider', Slider::query()->where('active', 1)->count())->icon(Heroicon::OutlinedPhoto),
         ];
     }
 }
